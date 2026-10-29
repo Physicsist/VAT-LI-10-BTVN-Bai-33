@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chủ đề 33: Biến Dạng Của Vật Rắn - Định Luật Hooke - Luyện Tập Vật Lí 10</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-light: #dbeafe;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --radius: 14px;
+      --shadow: 0 6px 20px rgba(15, 23, 42, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 18px 16px;
+    }
+
+    /* HEADER */
+    .app-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-title h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .header-title p {
+      font-size: 0.92rem;
+      opacity: 0.92;
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* 3 REQUIRED CONTROLS BAR */
+    .controls-panel {
+      background: var(--card);
+      border: 2px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 820px) {
+      .controls-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .control-box {
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .student-inputs {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 8px;
+    }
+
+    .student-inputs input {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 8px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .student-inputs input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-action {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.12s, background 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-sound {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-sound.muted {
+      background: #64748b;
+      box-shadow: none;
+    }
+
+    .btn-sound-test {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 5px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-report {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      height: 100%;
+      min-height: 52px;
+      font-size: 0.96rem;
+    }
+
+    .btn-report:hover {
+      background: linear-gradient(135deg, #047857 0%, #059669 100%);
+    }
+
+    /* SOUND TOAST */
+    .sound-toast {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 1000;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      transform: translateY(-120%);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s;
+      pointer-events: none;
+      max-width: 350px;
+    }
+
+    .sound-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sound-toast.correct {
+      background: #16a34a;
+      color: #ffffff;
+      border: 2px solid #86efac;
+    }
+
+    .sound-toast.wrong {
+      background: #dc2626;
+      color: #ffffff;
+      border: 2px solid #fca5a5;
+    }
+
+    /* LEVEL TABS & LOCK PROGRESS */
+    .unlock-banner {
+      background: linear-gradient(90deg, #eff6ff 0%, #fef3c7 100%);
+      border: 2px solid #93c5fd;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .unlock-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .unlock-title {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: #1e3a8a;
+    }
+
+    .unlock-subtitle {
+      font-size: 0.86rem;
+      color: #334155;
+    }
+
+    .stars-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .star-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      background: #e2e8f0;
+      color: #475569;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .star-pill.done {
+      background: #dcfce7;
+      color: #15803d;
+      border-color: #4ade80;
+    }
+
+    .level-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .level-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .level-tab {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s;
+      position: relative;
+    }
+
+    .level-tab.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+    }
+
+    .level-tab.locked {
+      opacity: 0.65;
+      background: #f1f5f9;
+      cursor: not-allowed;
+    }
+
+    .level-tab-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .level-name {
+      font-weight: 800;
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .level-status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .level-tab.active .level-status-badge {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .level-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* LEVEL TOOLBAR */
+    .level-toolbar {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .level-stats {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .stat-item span {
+      color: var(--primary);
+    }
+
+    .btn-shuffle {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-shuffle:hover {
+      background: var(--primary-hover);
+    }
+
+    /* QUESTION CARDS */
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .question-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      transition: border-color 0.2s;
+    }
+
+    .question-card.answered-correct {
+      border-color: #4ade80;
+    }
+
+    .question-card.answered-wrong {
+      border-color: #f87171;
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .q-num {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.86rem;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    .q-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: #f1f5f9;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .q-text {
+      font-size: 1.03rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .q-illustration {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: auto;
+    }
+
+    .q-illustration svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-btn {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #1e293b;
+      font-weight: 800;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-btn.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #065f46;
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .option-btn.wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+
+    .option-btn.wrong .option-letter {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .feedback-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      color: #14532d;
+    }
+
+    .feedback-box.wrong {
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #7f1d1d;
+    }
+
+    .feedback-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* MATH STYLING */
+    .math {
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .math sub,
+    .math sup {
+      font-style: normal;
+      font-size: 0.76em;
+    }
+
+    .vec {
+      position: relative;
+      display: inline-block;
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: italic;
+      font-weight: 700;
+      padding-top: 2px;
+    }
+
+    .vec::after {
+      content: "→";
+      position: absolute;
+      top: -0.58em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72em;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 3px;
+      font-family: "Cambria Math", "Times New Roman", Times, serif;
+      font-style: normal;
+      font-size: 0.95em;
+    }
+
+    .frac > span:first-child {
+      border-bottom: 1.5px solid currentColor;
+      padding: 0 3px 1px;
+    }
+
+    .frac > span:last-child {
+      padding: 1px 3px 0;
+    }
+
+    .sqrt {
+      display: inline-flex;
+      align-items: baseline;
+      font-style: normal;
+      vertical-align: baseline;
+    }
+
+    .sqrt::before {
+      content: "√";
+      font-size: 1.05em;
+      line-height: 1;
+      margin-right: 0.5px;
+    }
+
+    .sqrt > span {
+      border-top: 1.4px solid currentColor;
+      padding: 0 2px;
+      line-height: 1.1;
+    }
+
+    /* LEVEL COMPLETION CALLOUT */
+    .round-summary {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 2px solid #60a5fa;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .round-summary.show {
+      display: block;
+    }
+
+    .round-summary h3 {
+      font-size: 1.2rem;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    .round-summary p {
+      color: #1e293b;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .round-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* MODAL REPORT */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--card);
+      border-radius: 16px;
+      max-width: 620px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 22px 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 2px solid #93c5fd;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.22rem;
+      color: #1e3a8a;
+    }
+
+    .btn-close {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.92rem;
+    }
+
+    .report-table th,
+    .report-table td {
+      border: 1px solid var(--border);
+      padding: 9px 12px;
+      text-align: left;
+    }
+
+    .report-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .history-list {
+      max-height: 150px;
+      overflow-y: auto;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.84rem;
+      margin-top: 8px;
+    }
+
+    .history-item {
+      padding: 4px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="soundToast" class="sound-toast"></div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-title">
+        <h1>🔩 CHỦ ĐỀ 33: BIẾN DẠNG CỦA VẬT RẮN &amp; ĐỊNH LUẬT HOOKE – VẬT LÍ 10</h1>
+        <p>App luyện tập tương tác • Đảo câu hỏi &amp; đáp án ngẫu nhiên • Chấm đúng/sai tức thì</p>
+      </div>
+      <div class="header-badges">
+        <span class="badge">🎯 Cấp độ 1: 12 câu (Bắt buộc 3 lần 12/12)</span>
+        <span class="badge">🚀 Cấp độ 2 (7–8đ): 5 câu</span>
+        <span class="badge">🏆 Cấp độ 3 (9–10đ): 5 câu</span>
+      </div>
+    </header>
+
+    <!-- 3 NÚT / Ô CHỨC NĂNG RÕ RÀNG -->
+    <section class="controls-panel" aria-label="Bảng điều khiển học sinh">
+      <!-- 1. Ô nhập họ tên, lớp -->
+      <div class="control-box">
+        <div class="control-label">👤 1. Ô NHẬP HỌ TÊN &amp; LỚP HỌC SINH</div>
+        <div class="student-inputs">
+          <input type="text" id="studentName" placeholder="Nhập họ và tên học sinh..." autocomplete="name" />
+          <input type="text" id="studentClass" placeholder="Lớp (VD: 10A1)" />
+        </div>
+      </div>
+
+      <!-- 2. Nút âm thanh xác nhận Đúng/Sai vui nhộn, bất ngờ -->
+      <div class="control-box">
+        <div class="control-label">
+          <span>🔊 2. ÂM THANH ĐÚNG/SAI (VUI NHỘN, BẤT NGỜ)</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button type="button" id="btnToggleSound" class="btn-action btn-sound">
+            <span id="soundIcon">🔊</span>
+            <span id="soundText">Âm thanh: BẬT (Vui nhộn)</span>
+          </button>
+          <button type="button" id="btnTestSound" class="btn-sound-test" title="Nghe thử hiệu ứng âm thanh bất ngờ">
+            🎵 Thử
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Nút báo họ tên, kết quả thực hiện -->
+      <div class="control-box">
+        <div class="control-label">📊 3. BÁO CÁO KẾT QUẢ THỰC HIỆN</div>
+        <button type="button" id="btnShowReport" class="btn-action btn-report">
+          📋 Báo Họ Tên &amp; Kết Quả Thực Hiện
+        </button>
+      </div>
+    </section>
+
+    <!-- THANH TIẾN ĐỘ MỞ KHÓA CẤP ĐỘ 1 (BẮT BUỘC 3 LẦN ĐÚNG 12/12, KHÔNG CÓ NÚT MỞ KHÓA GV) -->
+    <section class="unlock-banner">
+      <div class="unlock-info">
+        <div class="unlock-title" id="unlockTitle">
+          🔒 Yêu cầu bắt buộc: Hoàn thành đúng 12/12 câu Cấp độ 1 đủ 3 lần mới mở khóa Cấp độ 2 &amp; 3!
+        </div>
+        <div class="unlock-subtitle" id="unlockSubtitle">
+          Học sinh phải tự làm hết 12 câu Cấp độ 1 và đạt tuyệt đối 12/12 câu đúng trong 3 lượt làm bài (mỗi lượt đảo câu hỏi &amp; đáp án ngẫu nhiên).
+        </div>
+      </div>
+      <div class="stars-box" id="starsBox">
+        <span class="star-pill" id="star1">⭐ Lần 1: Chưa đạt</span>
+        <span class="star-pill" id="star2">⭐ Lần 2: Chưa đạt</span>
+        <span class="star-pill" id="star3">⭐ Lần 3: Chưa đạt</span>
+        <div class="teacher-unlock-box" style="display:inline-flex;align-items:center;gap:6px;margin-left:6px;background:#fff7ed;border:1.5px solid #fdba74;padding:4px 10px;border-radius:999px;">
+          <span style="font-size:0.78rem;font-weight:800;color:#9a3412;">👩‍🏫 GV:</span>
+          <input type="password" id="teacherCodeInput" placeholder="Mã mở khóa..." style="width:92px;padding:3px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:0.8rem;" onkeydown="if(event.key==='Enter')handleTeacherUnlock()" />
+          <button type="button" id="btnTeacherUnlock" onclick="handleTeacherUnlock()" style="background:#ea580c;color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:800;cursor:pointer;">Mở khóa CĐ 2,3</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHỌN CẤP ĐỘ -->
+    <nav class="level-tabs" aria-label="Các cấp độ bài tập">
+      <button type="button" class="level-tab active" id="tabLevel1" onclick="selectLevel(1)">
+        <div class="level-tab-top">
+          <span class="level-name">🟢 CẤP ĐỘ 1 (Nền tảng)</span>
+          <span class="level-status-badge" id="badgeLevel1">Đang mở • 12 câu</span>
+        </div>
+        <div class="level-desc">Biến dạng kéo/nén, giới hạn đàn hồi, định luật Hooke <span class="math">F<sub>đh</sub> = k|&Delta;&#8467;|</span>, tính 1 bước (Bắt buộc 3 lần 12/12)</div>
+      </button>
+
+      <button type="button" class="level-tab locked" id="tabLevel2" onclick="selectLevel(2)">
+        <div class="level-tab-top">
+          <span class="level-name">🟡 CẤP ĐỘ 2 (Mức 7–8 điểm)</span>
+          <span class="level-status-badge" id="badgeLevel2">🔒 Khóa • 5 câu</span>
+        </div>
+        <div class="level-desc">Lò xo treo thẳng đứng, tăng lực kéo lò xo, đồ thị lực đàn hồi theo chiều dài</div>
+      </button>
+
+      <button type="button" class="level-tab locked" id="tabLevel3" onclick="selectLevel(3)">
+        <div class="level-tab-top">
+          <span class="level-name">🔴 CẤP ĐỘ 3 (Mức 9–10 điểm)</span>
+          <span class="level-status-badge" id="badgeLevel3">🔒 Khóa • 5 câu</span>
+        </div>
+        <div class="level-desc">Vận dụng cao: Hệ phương trình 2 vật treo, cắt lò xo, ghép lò xo nối tiếp/song song, hệ 2 lò xo vuông góc</div>
+      </button>
+    </nav>
+
+    <!-- THANH THỐNG KÊ CẤP ĐỘ HIỆN TẠI -->
+    <div class="level-toolbar">
+      <div class="level-stats">
+        <div class="stat-item">Đang làm: <span id="statCurrentLevel">Cấp độ 1</span></div>
+        <div class="stat-item">Đã làm: <span id="statProgress">0 / 12</span> câu</div>
+        <div class="stat-item">Số câu đúng: <span id="statCorrect">0</span></div>
+        <div class="stat-item">Lượt làm CĐ1 thứ: <span id="statAttempt">1</span></div>
+      </div>
+      <button type="button" class="btn-shuffle" onclick="restartCurrentLevel()">
+        🔄 Làm lại &amp; Đảo câu hỏi / đáp án
+      </button>
+    </div>
+
+    <!-- DANH SÁCH CÂU HỎI -->
+    <main id="questionsContainer" class="questions-list"></main>
+
+    <!-- TỔNG KẾT LƯỢT LÀM -->
+    <div id="roundSummary" class="round-summary">
+      <h3 id="summaryTitle">Hoàn thành lượt làm bài!</h3>
+      <p id="summaryText"></p>
+      <div class="round-actions">
+        <button type="button" class="btn-shuffle" onclick="restartCurrentLevel()">
+          🔄 Làm lại cấp độ này (Đảo đề mới)
+        </button>
+        <button type="button" id="btnNextLevel" class="btn-shuffle" style="background:#16a34a; display:none;" onclick="goNextUnlockedLevel()">
+          🚀 Chuyển sang Cấp độ tiếp theo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BÁO HỌ TÊN & KẾT QUẢ THỰC HIỆN -->
+  <div id="reportModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>📋 PHIẾU BÁO HỌ TÊN &amp; KẾT QUẢ THỰC HIỆN</h2>
+        <button type="button" class="btn-close" onclick="closeReportModal()">✕</button>
+      </div>
+      <div id="reportBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-shuffle" style="background:#059669;" onclick="copyReportText()">
+          📋 Sao chép kết quả gửi Giáo viên
+        </button>
+        <button type="button" class="btn-shuffle" style="background:#475569;" onclick="closeReportModal()">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. HỆ THỐNG ÂM THANH WEB AUDIO API "VUI NHỘN, BẤT NGỜ"
+    // =========================================================================
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    const FUNNY_CORRECT_MESSAGES = [
+      "🎉 Chuẩn đét! Động năng tri thức đang tăng vọt!",
+      "🚀 Tuyệt vời! Nhớ bài siêu chắc luôn!",
+      "🌟 Bất ngờ chưa! Một pha áp dụng công thức 10 điểm!",
+      "🏆 Quá xuất sắc! Không một chút sai sót!",
+      "⚡ Năng lượng tích cực đạt cực đại! Tiếp tục phát huy nhé!",
+      "🎯 Bách phát bách trúng! Thầy/cô rất tự hào về em!"
+    ];
+
+    const FUNNY_WRONG_MESSAGES = [
+      "🙊 Ối dồi ôi! Nhầm công thức tí xíu rồi, xem giải thích ngay nhé!",
+      "🐸 Úi chà! Cẩn thận hệ số 1/2 hoặc đơn vị chuẩn SI nha!",
+      "💡 Suýt đúng! Đọc kĩ lời giải bên dưới để gỡ lại ở lượt sau nhé!",
+      "🎢 Cú trượt bất ngờ! Xem lại hướng dẫn giải để nhớ thật lâu nào!",
+      "🔧 Chưa chính xác rồi! Bình tĩnh đọc công thức bên dưới nha!"
+    ];
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, type, startTime, duration, vol = 0.18, slideTo = null) {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+      if (slideTo) {
+        osc.frequency.exponentialRampToValueAtTime(slideTo, startTime + duration);
+      }
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    }
+
+    function playFunnySound(isCorrect) {
+      const msgList = isCorrect ? FUNNY_CORRECT_MESSAGES : FUNNY_WRONG_MESSAGES;
+      const randomMsg = msgList[Math.floor(Math.random() * msgList.length)];
+      showSoundToast(randomMsg, isCorrect);
+
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+
+      if (isCorrect) {
+        const style = Math.floor(Math.random() * 3);
+        if (style === 0) {
+          playTone(523.25, "triangle", now, 0.09, 0.22);
+          playTone(659.25, "triangle", now + 0.09, 0.09, 0.22);
+          playTone(783.99, "triangle", now + 0.18, 0.09, 0.22);
+          playTone(1046.5, "sine", now + 0.27, 0.28, 0.26);
+        } else if (style === 1) {
+          playTone(330, "sine", now, 0.2, 0.2, 990);
+          playTone(987.77, "triangle", now + 0.21, 0.08, 0.22);
+          playTone(1318.5, "sine", now + 0.29, 0.26, 0.25);
+        } else {
+          const notes = [440, 554.37, 659.25, 880, 1108.73];
+          notes.forEach((n, idx) => {
+            playTone(n, "square", now + idx * 0.065, 0.09, 0.12);
+          });
+        }
+      } else {
+        const style = Math.floor(Math.random() * 3);
+        if (style === 0) {
+          playTone(392.0, "sawtooth", now, 0.16, 0.14, 370.0);
+          playTone(369.99, "sawtooth", now + 0.17, 0.16, 0.14, 349.23);
+          playTone(349.23, "sawtooth", now + 0.34, 0.32, 0.16, 261.63);
+        } else if (style === 1) {
+          playTone(180, "sine", now, 0.18, 0.24, 520);
+          playTone(520, "sine", now + 0.18, 0.24, 0.2, 150);
+        } else {
+          playTone(220, "triangle", now, 0.15, 0.2, 160);
+          playTone(160, "sawtooth", now + 0.16, 0.26, 0.16, 110);
+        }
+      }
+    }
+
+    function playUnlockFanfare() {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const melody = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+      const durs = [0.1, 0.1, 0.1, 0.18, 0.1, 0.35];
+      let t = now;
+      melody.forEach((f, i) => {
+        playTone(f, "triangle", t, durs[i], 0.25);
+        t += durs[i] + 0.02;
+      });
+    }
+
+    let toastTimer = null;
+    function showSoundToast(message, isCorrect) {
+      const toast = document.getElementById("soundToast");
+      toast.textContent = message;
+      toast.className = "sound-toast show " + (isCorrect ? "correct" : "wrong");
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
+    }
+
+    document.getElementById("btnToggleSound").addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("btnToggleSound");
+      const icon = document.getElementById("soundIcon");
+      const text = document.getElementById("soundText");
+      if (soundEnabled) {
+        btn.classList.remove("muted");
+        icon.textContent = "🔊";
+        text.textContent = "Âm thanh: BẬT (Vui nhộn)";
+        playFunnySound(true);
+      } else {
+        btn.classList.add("muted");
+        icon.textContent = "🔇";
+        text.textContent = "Âm thanh: TẮT";
+      }
+    });
+
+    document.getElementById("btnTestSound").addEventListener("click", () => {
+      soundEnabled = true;
+      const btn = document.getElementById("btnToggleSound");
+      btn.classList.remove("muted");
+      document.getElementById("soundIcon").textContent = "🔊";
+      document.getElementById("soundText").textContent = "Âm thanh: BẬT (Vui nhộn)";
+      playFunnySound(Math.random() > 0.35);
+    });
+
+    // =========================================================================
+    // 2. NGÂN HÀNG CÂU HỎI CHỦ ĐỀ 25 - ĐỘNG NĂNG, THẾ NĂNG (BÁM SÁT FILE CH25)
+    // =========================================================================
+    const QUESTIONS_DB = {
+      "1": [
+            {
+                  "id": "L1_01",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Khi không còn ngoại lực tác dụng, nếu vật rắn lấy lại được hoàn toàn hình dạng và kích thước ban đầu thì biến dạng của vật đó được gọi là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">KHÁI NIỆM BIẾN DẠNG ĐÀN HỒI CỦA VẬT RẮN</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Khi có ngoại lực F: Vật thay đổi kích thước</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Khi ngừng ngoại lực: Vật về kích thước ℓ₀</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Biến dạng đó gọi là biến dạng đàn hồi</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Trong giới hạn đàn hồi, vật tự khôi phục hoàn toàn hình dạng và kích thước ban đầu</text>\n    </svg>",
+                  "options": [
+                        "biến dạng đàn hồi.",
+                        "biến dạng dẻo (biến dạng còn dư).",
+                        "giới hạn bền của vật rắn.",
+                        "biến dạng nhiệt của vật rắn."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Biến dạng đàn hồi là biến dạng mà vật rắn tự lấy lại được hoàn toàn hình dạng và kích thước ban đầu khi ngoại lực ngừng tác dụng."
+            },
+            {
+                  "id": "L1_02",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Trong giới hạn đàn hồi của một lò xo có độ cứng <span class=\"math\">k</span> và độ biến dạng <span class=\"math\">|Δℓ|</span>, công thức của định luật Hooke tính độ lớn lực đàn hồi <span class=\"math\">F<sub>đh</sub></span> là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐỊNH LUẬT HOOKE VỀ LỰC ĐÀN HỒI CỦA LÒ XO</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ = |ℓ - ℓ₀|</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Biểu thức định luật Hooke: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · |Δℓ|</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">k: Độ cứng (hệ số đàn hồi) của lò xo (N/m)</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">|Δℓ| = |ℓ - ℓ₀|: Độ biến dạng của lò xo (m)</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Định luật Hooke (trong giới hạn đàn hồi): F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · |Δℓ|</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">F<sub>đh</sub> = k · |Δℓ|</span>",
+                        "<span class=\"math\">F<sub>đh</sub> = <span class=\"frac\"><span class=\"num\">k</span><span class=\"den\">|Δℓ|</span></span></span>",
+                        "<span class=\"math\">F<sub>đh</sub> = k · (Δℓ)<sup>2</sup></span>",
+                        "<span class=\"math\">F<sub>đh</sub> = <span class=\"frac\"><span class=\"num\">|Δℓ|</span><span class=\"den\">k</span></span></span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Theo định luật Hooke: Trong giới hạn đàn hồi, độ lớn lực đàn hồi của lò xo tỉ lệ thuận với độ biến dạng của lò xo: <span class=\"math\">F<sub>đh</sub> = k · |Δℓ|</span>, trong đó <span class=\"math\">k</span> là độ cứng (<span class=\"math\">N/m</span>) và <span class=\"math\">|Δℓ| = |ℓ - ℓ<sub>0</sub>|</span> (<span class=\"math\">m</span>)."
+            },
+            {
+                  "id": "L1_03",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Hệ số đàn hồi (độ cứng <span class=\"math\">k</span>) của một lò xo phụ thuộc vào những yếu tố nào và KHÔNG phụ thuộc vào yếu tố nào sau đây?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐẶC TÍNH ĐỘ CỨNG k CỦA LÒ XO</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">k phụ thuộc: Vật liệu, chiều dài ℓ₀, hình dạng</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">k KHÔNG phụ thuộc vào lực F và độ dãn Δℓ</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Lò xo có k càng lớn thì càng khó biến dạng</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Độ cứng k là đặc trưng riêng của mỗi lò xo, không phụ thuộc ngoại lực F</text>\n    </svg>",
+                  "options": [
+                        "Phụ thuộc vào bản chất vật liệu, kích thước, hình dạng lò xo; KHÔNG phụ thuộc vào độ lớn lực tác dụng.",
+                        "Phụ thuộc vào độ lớn lực kéo hoặc lực nén tác dụng lên lò xo.",
+                        "Phụ thuộc vào độ biến dạng <span class=\"math\">Δℓ</span> của lò xo.",
+                        "Phụ thuộc vào khối lượng của vật nặng treo vào lò xo."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Độ cứng <span class=\"math\">k</span> của một lò xo chỉ phụ thuộc vào bản chất chất liệu làm lò xo, chiều dài tự nhiên, tiết diện dây và bán kính vòng xoắn; không phụ thuộc vào ngoại lực <span class=\"math\">F</span> hay độ biến dạng <span class=\"math\">Δℓ</span>."
+            },
+            {
+                  "id": "L1_04",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Lực đàn hồi của lò xo xuất hiện ở hai đầu lò xo khi lò xo bị biến dạng có phương và chiều như thế nào?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">PHƯƠNG VÀ CHIỀU CỦA LỰC ĐÀN HỒI TRÊN LÒ XO</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ > ℓ₀):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Dãn Δℓ</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Phương: Trùng với trục của lò xo</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Chiều: Ngược chiều biến dạng của lò xo</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Khi dãn: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> hướng vào ; Khi nén: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> hướng ra</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Lực đàn hồi luôn có xu hướng đưa lò xo về chiều dài tự nhiên ℓ₀</text>\n    </svg>",
+                  "options": [
+                        "Phương trùng với trục của lò xo, chiều ngược với chiều biến dạng của lò xo.",
+                        "Phương vuông góc với trục của lò xo, chiều cùng với chiều của ngoại lực.",
+                        "Phương trùng với trục của lò xo, chiều cùng với chiều biến dạng của lò xo.",
+                        "Luôn là lực kéo hướng vào phía trong lò xo dù lò xo dãn hay nén."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Lực đàn hồi của lò xo có điểm đặt ở hai đầu lò xo, phương trùng với trục của lò xo và chiều luôn ngược với chiều biến dạng (chống lại nguyên nhân gây biến dạng: hướng vào trong khi lò xo dãn, hướng ra ngoài khi lò xo nén)."
+            },
+            {
+                  "id": "L1_05",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Trong các trường hợp sau: (I) Cột bê tông chịu lực trong tòa nhà; (II) Dây cáp treo đèn chùm trên trần nhà; (III) Lò xo giảm xóc xe máy khi có người ngồi lên; (IV) Dây cao su khi được kéo căng. Những trường hợp nào xảy ra biến dạng kéo?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">PHÂN BIỆT BIẾN DẠNG KÉO VÀ BIẾN DẠNG NÉN</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">ℓ₀</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">m</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ > 0</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng kéo (ℓ > ℓ₀): Dây treo đèn, dây cung</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Biến dạng nén (ℓ < ℓ₀): Cột nhà, trụ cầu, đệm ghế</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Cả hai đều sinh ra lực đàn hồi chống lại biến dạng</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng kéo làm tăng chiều dài (II, IV) ; Biến dạng nén làm giảm chiều dài (I, III)</text>\n    </svg>",
+                  "options": [
+                        "(II) và (IV).",
+                        "(I) và (III).",
+                        "(I), (II) và (IV).",
+                        "(II), (III) và (IV)."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Biến dạng kéo làm chiều dài vật tăng lên dọc theo trục: xảy ra ở dây cáp treo đèn (II) và dây cao su bị kéo căng (IV). Còn cột chịu lực (I) và lò xo giảm xóc (III) bị nén ngắn lại nên là biến dạng nén."
+            },
+            {
+                  "id": "L1_06",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Trong giới hạn đàn hồi, đồ thị biểu diễn sự phụ thuộc của độ lớn lực đàn hồi <span class=\"math\">F<sub>đh</sub></span> vào độ biến dạng <span class=\"math\">|Δℓ|</span> của một lò xo có dạng là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐỒ THỊ LỰC ĐÀN HỒI THEO ĐỘ BIẾN DẠNG (TRONG GIỚI HẠN ĐÀN HỒI)</text>\n      \n      <line x1=\"65\" y1=\"155\" x2=\"225\" y2=\"155\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <line x1=\"65\" y1=\"155\" x2=\"65\" y2=\"38\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <text x=\"218\" y=\"172\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Δℓ (m)</text>\n      <text x=\"48\" y=\"46\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> (N)</text>\n      <text x=\"53\" y=\"168\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#0f172a\">O</text>\n      <line x1=\"65\" y1=\"155\" x2=\"165\" y2=\"68\" stroke=\"#2563eb\" stroke-width=\"3\"/>\n      <path d=\"M 165 68 Q 190 54 215 52\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"2.5\" stroke-dasharray=\"4,2\"/><circle cx=\"165\" cy=\"68\" r=\"4.5\" fill=\"#dc2626\"/><text x=\"160\" y=\"58\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">A</text><text x=\"215\" y=\"46\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">B</text>\n      <line x1=\"165\" y1=\"68\" x2=\"165\" y2=\"155\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"65\" y1=\"68\" x2=\"165\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <text x=\"165\" y=\"170\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">Δℓ₁</text>\n      <text x=\"56\" y=\"72\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">F₁</text>\n      <rect x=\"240\" y=\"48\" width=\"230\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"355\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Trong giới hạn đàn hồi (đoạn OA):</text>\n      <text x=\"355\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · Δℓ (Tỉ lệ thuận bậc nhất)</text>\n      <text x=\"355\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Đồ thị là đoạn thẳng đi qua gốc tọa độ O</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Hệ số góc của đoạn thẳng OA chính bằng độ cứng k = F₁ / Δℓ₁</text>\n    </svg>",
+                  "options": [
+                        "một đoạn thẳng đi qua gốc tọa độ O.",
+                        "một đường cong parabol đi qua gốc tọa độ O.",
+                        "một đường thẳng không đi qua gốc tọa độ O.",
+                        "một nhánh hypebol giảm dần."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Vì <span class=\"math\">F<sub>đh</sub> = k · |Δℓ|</span> (với <span class=\"math\">k = const</span>) là hàm bậc nhất tỉ lệ thuận nên trong giới hạn đàn hồi (đoạn OA), đồ thị của <span class=\"math\">F<sub>đh</sub></span> theo <span class=\"math\">|Δℓ|</span> là một đoạn thẳng đi qua gốc tọa độ O."
+            },
+            {
+                  "id": "L1_07",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một lò xo có độ cứng <span class=\"math\">k = 100 N/m</span>. Khi lò xo bị kéo dãn ra một đoạn <span class=\"math\">Δℓ = 5 cm</span> trong giới hạn đàn hồi thì độ lớn lực đàn hồi xuất hiện trong lò xo bằng",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH LỰC ĐÀN HỒI TỪ ĐỘ CỨNG k = 100 N/m VÀ Δℓ = 5 cm</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 5 N</text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ = 0,05 m</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Đổi đơn vị: Δℓ = 5 cm = 0,05 m</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Áp dụng công thức: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · Δℓ</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 100 × 0,05 = 5 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · Δℓ = 100 · 0,05 = 5 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">5 N</span>",
+                        "<span class=\"math\">500 N</span>",
+                        "<span class=\"math\">20 N</span>",
+                        "<span class=\"math\">50 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi đơn vị: <span class=\"math\">Δℓ = 5 cm = 0,05 m</span>. Áp dụng định luật Hooke: <span class=\"math\">F<sub>đh</sub> = k · Δℓ = 100 · 0,05 = 5 N</span>."
+            },
+            {
+                  "id": "L1_08",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một lò xo có chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub> = 25 cm</span>. Khi bị nén dọc theo trục, chiều dài của lò xo còn lại là <span class=\"math\">ℓ = 20 cm</span> và độ lớn lực đàn hồi khi đó là <span class=\"math\">F<sub>đh</sub> = 2,5 N</span>. Độ biến dạng <span class=\"math\">|Δℓ|</span> và độ cứng <span class=\"math\">k</span> của lò xo lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">LÒ XO BỊ NÉN TỪ ℓ₀ = 25 cm XUỐNG ℓ = 20 cm</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀ = 25 cm):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ = 20 cm):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 2,5 N</text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">|Δℓ| = 5 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Độ biến dạng: |Δℓ| = 25 - 20 = 5 cm = 0,05 m</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Độ cứng: k = F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> / |Δℓ| = 2,5 / 0,05</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">k = 50 N/m</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">|Δℓ| = 25 - 20 = 5 cm = 0,05 m  ⟹  k = 2,5 / 0,05 = 50 N/m</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">|Δℓ| = 5 cm</span> và <span class=\"math\">k = 50 N/m</span>",
+                        "<span class=\"math\">|Δℓ| = 5 cm</span> và <span class=\"math\">k = 0,5 N/m</span>",
+                        "<span class=\"math\">|Δℓ| = 20 cm</span> và <span class=\"math\">k = 12,5 N/m</span>",
+                        "<span class=\"math\">|Δℓ| = 45 cm</span> và <span class=\"math\">k = 50 N/m</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Độ biến dạng nén của lò xo là <span class=\"math\">|Δℓ| = |ℓ - ℓ<sub>0</sub>| = 25 - 20 = 5 cm = 0,05 m</span>. Độ cứng của lò xo: <span class=\"math\">k = <span class=\"frac\"><span class=\"num\">F<sub>đh</sub></span><span class=\"den\">|Δℓ|</span></span> = <span class=\"frac\"><span class=\"num\">2,5</span><span class=\"den\">0,05</span></span> = 50 N/m</span>."
+            },
+            {
+                  "id": "L1_09",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một lò xo có một đầu cố định, đầu kia chịu một lực kéo có độ lớn <span class=\"math\">F = 5 N</span> dọc theo trục thì lò xo dãn ra một đoạn <span class=\"math\">Δℓ = 8 cm</span> trong giới hạn đàn hồi. Độ cứng <span class=\"math\">k</span> của lò xo là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">XÁC ĐỊNH ĐỘ CỨNG k KHI BIẾT F = 5 N VÀ Δℓ = 8 cm</text>\n      \n      <line x1=\"65\" y1=\"155\" x2=\"225\" y2=\"155\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <line x1=\"65\" y1=\"155\" x2=\"65\" y2=\"38\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <text x=\"218\" y=\"172\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Δℓ (m)</text>\n      <text x=\"48\" y=\"46\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> (N)</text>\n      <text x=\"53\" y=\"168\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#0f172a\">O</text>\n      <line x1=\"65\" y1=\"155\" x2=\"165\" y2=\"68\" stroke=\"#2563eb\" stroke-width=\"3\"/>\n      <circle cx=\"165\" cy=\"68\" r=\"4.5\" fill=\"#dc2626\"/>\n      <line x1=\"165\" y1=\"68\" x2=\"165\" y2=\"155\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"65\" y1=\"68\" x2=\"165\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <text x=\"165\" y=\"170\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">0,08</text>\n      <text x=\"56\" y=\"72\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">5</text>\n      <rect x=\"240\" y=\"48\" width=\"230\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"355\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Đổi đơn vị: Δℓ = 8 cm = 0,08 m</text>\n      <text x=\"355\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Khi cân bằng: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = F = 5 N</text>\n      <text x=\"355\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">k = F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> / Δℓ = 5 / 0,08 = 62,5 N/m</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">k = F / Δℓ = 5 / 0,08 = 62,5 N/m</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">62,5 N/m</span>",
+                        "<span class=\"math\">0,625 N/m</span>",
+                        "<span class=\"math\">40 N/m</span>",
+                        "<span class=\"math\">160 N/m</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi <span class=\"math\">Δℓ = 8 cm = 0,08 m</span>. Khi cân bằng, lực đàn hồi cân bằng với lực kéo: <span class=\"math\">F<sub>đh</sub> = F = 5 N</span>. Suy ra độ cứng của lò xo: <span class=\"math\">k = <span class=\"frac\"><span class=\"num\">F<sub>đh</sub></span><span class=\"den\">Δℓ</span></span> = <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">0,08</span></span> = 62,5 N/m</span>."
+            },
+            {
+                  "id": "L1_10",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Một lò xo nhẹ có độ cứng <span class=\"math\">k = 100 N/m</span> được treo thẳng đứng, đầu trên cố định. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Để lò xo dãn ra được một đoạn <span class=\"math\">Δℓ = 5 cm</span> khi vật ở vị trí cân bằng thì cần treo vào đầu dưới của lò xo một vật có khối lượng <span class=\"math\">m</span> bằng",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">CÂN BẰNG CỦA VẬT NẶNG TREO TRÊN LÒ XO THẲNG ĐỨNG</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">ℓ₀</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">m = 500 g</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ = 5 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Điều kiện cân bằng: P = F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">m · g = k · Δℓ = 100 × 0,05 = 5 N</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Khối lượng: m = 5 / 10 = 0,5 kg = 500 g</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Khi vật cân bằng: m · g = k · Δℓ  ⟹  m = 0,5 kg = 500 g</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">500 g</span>",
+                        "<span class=\"math\">5 kg</span>",
+                        "<span class=\"math\">200 g</span>",
+                        "<span class=\"math\">50 g</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi <span class=\"math\">Δℓ = 5 cm = 0,05 m</span>. Khi vật cân bằng trên lò xo thẳng đứng: <span class=\"math\">P = F<sub>đh</sub> ⇔ m · g = k · Δℓ ⇒ m = <span class=\"frac\"><span class=\"num\">k · Δℓ</span><span class=\"den\">g</span></span> = <span class=\"frac\"><span class=\"num\">100 · 0,05</span><span class=\"den\">10</span></span> = 0,5 kg = 500 g</span>."
+            },
+            {
+                  "id": "L1_11",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Vật được cấu tạo từ chất liệu nào sau đây hầu như KHÔNG có tính đàn hồi (bị biến dạng dẻo hoàn toàn khi ấn tay vào)?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">VẬT LIỆU ĐÀN HỒI VÀ VẬT LIỆU KHÔNG ĐÀN HỒI (DẺO)</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Vật đàn hồi: Thép, đồng, nhôm, cao su, dây cung</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Vật không đàn hồi (dẻo): Đất sét, đất nặn, sáp mềm</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Vật dẻo không tự lấy lại hình dạng ban đầu</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Đất sét bị biến dạng dẻo, không có tính đàn hồi</text>\n    </svg>",
+                  "options": [
+                        "Đất sét ướt (hoặc bột bánh dẻo).",
+                        "Thép lò xo.",
+                        "Đồng thau.",
+                        "Cao su lưu hóa."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đất sét ướt hoặc đất nặn khi chịu lực ép sẽ bị biến dạng dẻo (không tự khôi phục lại hình dạng ban đầu khi ngừng tác dụng lực), nên không có tính đàn hồi."
+            },
+            {
+                  "id": "L1_12",
+                  "tag": "Cấp độ 1 • Nhận biết & Thông hiểu",
+                  "question": "Dùng hai lò xo nhẹ có độ cứng <span class=\"math\">k<sub>1</sub></span> và <span class=\"math\">k<sub>2</sub></span> để treo hai quả nặng có cùng khối lượng <span class=\"math\">m</span>. Khi cân bằng, lò xo thứ nhất dãn nhiều hơn lò xo thứ hai (<span class=\"math\">Δℓ<sub>1</sub> > Δℓ<sub>2</sub></span>). Nhận xét nào sau đây đúng?",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">SO SÁNH ĐỘ CỨNG HAI LÒ XO KHI CÙNG CHỊU LỰC F = m·g</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Δℓ₁ > Δℓ₂</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">m</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ₁</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Cùng treo vật m: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh1</tspan> = F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh2</tspan> = m · g</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Ta có: k₁ · Δℓ₁ = k₂ · Δℓ₂</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Vì Δℓ₁ > Δℓ₂ nên k₁ < k₂ (dãn nhiều ⟹ k nhỏ)</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Cùng một lực tác dụng, lò xo nào dãn nhiều hơn thì có độ cứng k nhỏ hơn</text>\n    </svg>",
+                  "options": [
+                        "Độ cứng của lò xo thứ nhất nhỏ hơn lò xo thứ hai (<span class=\"math\">k<sub>1</sub> < k<sub>2</sub></span>).",
+                        "Độ cứng của lò xo thứ nhất lớn hơn lò xo thứ hai (<span class=\"math\">k<sub>1</sub> > k<sub>2</sub></span>).",
+                        "Hai lò xo có cùng độ cứng (<span class=\"math\">k<sub>1</sub> = k<sub>2</sub></span>).",
+                        "Lực đàn hồi của lò xo thứ nhất lớn hơn lò xo thứ hai."
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Do treo cùng khối lượng <span class=\"math\">m</span> nên lực đàn hồi ở hai lò xo bằng nhau: <span class=\"math\">F<sub>đh1</sub> = F<sub>đh2</sub> = m · g ⇔ k<sub>1</sub> · Δℓ<sub>1</sub> = k<sub>2</sub> · Δℓ<sub>2</sub></span>. Vì <span class=\"math\">Δℓ<sub>1</sub> > Δℓ<sub>2</sub></span> nên <span class=\"math\">k<sub>1</sub> < k<sub>2</sub></span>."
+            }
+      ],
+      "2": [
+            {
+                  "id": "L2_01",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Một lò xo nhẹ có độ cứng <span class=\"math\">k = 80 N/m</span> được treo thẳng đứng. Khi móc vào đầu tự do của lò xo một vật có khối lượng <span class=\"math\">m = 400 g</span>, ở vị trí cân bằng lò xo có chiều dài <span class=\"math\">ℓ = 18 cm</span>. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Độ biến dạng <span class=\"math\">Δℓ</span> và chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub></span> của lò xo lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÌM ĐỘ DÃN Δℓ VÀ CHIỀU DÀI TỰ NHIÊN ℓ₀ CỦA LÒ XO TREO</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">ℓ₀ = 13 cm</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">400 g</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ = 5 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">P = m · g = 0,4 × 10 = 4 N</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Độ dãn: Δℓ = P / k = 4 / 80 = 0,05 m = 5 cm</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Chiều dài tự nhiên: ℓ₀ = ℓ - Δℓ = 18 - 5 = 13 cm</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Δℓ = m·g / k = 5 cm  ⟹  ℓ₀ = ℓ - Δℓ = 18 - 5 = 13 cm</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">Δℓ = 5 cm</span> và <span class=\"math\">ℓ<sub>0</sub> = 13 cm</span>",
+                        "<span class=\"math\">Δℓ = 5 cm</span> và <span class=\"math\">ℓ<sub>0</sub> = 23 cm</span>",
+                        "<span class=\"math\">Δℓ = 4 cm</span> và <span class=\"math\">ℓ<sub>0</sub> = 14 cm</span>",
+                        "<span class=\"math\">Δℓ = 2 cm</span> và <span class=\"math\">ℓ<sub>0</sub> = 16 cm</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi <span class=\"math\">m = 400 g = 0,4 kg</span>. Trọng lượng của vật: <span class=\"math\">P = m · g = 4 N</span>. Khi cân bằng: <span class=\"math\">k · Δℓ = P ⇒ Δℓ = <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">80</span></span> = 0,05 m = 5 cm</span>. Vì lò xo treo thẳng đứng bị dãn nên chiều dài tự nhiên là <span class=\"math\">ℓ<sub>0</sub> = ℓ - Δℓ = 18 - 5 = 13 cm</span>."
+            },
+            {
+                  "id": "L2_02",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Một lò xo có chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub> = 80 cm</span> và độ cứng <span class=\"math\">k = 50 N/m</span>. Cố định một đầu lò xo, kéo đầu còn lại dọc theo trục với lực <span class=\"math\">F<sub>1</sub> = 2 N</span>. Để chiều dài của lò xo đạt tới <span class=\"math\">ℓ<sub>2</sub> = 95 cm</span> (trong giới hạn đàn hồi) thì cần phải tăng lực kéo thêm một lượng <span class=\"math\">ΔF</span> bằng",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TÍNH LƯỢNG LỰC KÉO CẦN TĂNG THÊM ĐỂ LÒ XO DÀI 95 cm</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀ = 80 cm):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ₂ = 95 cm):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F₂ = 7,5 N</text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ₂ = 15 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Lúc đầu: F₁ = 2 N (dãn Δℓ₁ = 4 cm, dài 84 cm)</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Khi ℓ₂ = 95 cm: Δℓ₂ = 15 cm = 0,15 m ⟹ F₂ = 7,5 N</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Cần tăng thêm: ΔF = F₂ - F₁ = 7,5 - 2 = 5,5 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F₂ = k · (ℓ₂ - ℓ₀) = 50 · 0,15 = 7,5 N  ⟹  ΔF = F₂ - F₁ = 5,5 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">5,5 N</span>",
+                        "<span class=\"math\">7,5 N</span>",
+                        "<span class=\"math\">3,5 N</span>",
+                        "<span class=\"math\">4,5 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Khi chiều dài lò xo là <span class=\"math\">ℓ<sub>2</sub> = 95 cm</span>, độ dãn của lò xo là <span class=\"math\">Δℓ<sub>2</sub> = ℓ<sub>2</sub> - ℓ<sub>0</sub> = 95 - 80 = 15 cm = 0,15 m</span>. Lực kéo cần thiết lúc này là <span class=\"math\">F<sub>2</sub> = k · Δℓ<sub>2</sub> = 50 · 0,15 = 7,5 N</span>. Vậy cần tăng lực kéo thêm một lượng <span class=\"math\">ΔF = F<sub>2</sub> - F<sub>1</sub> = 7,5 - 2 = 5,5 N</span>."
+            },
+            {
+                  "id": "L2_03",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Hai người cầm hai đầu của một lực kế lò xo nhẹ và kéo ngược chiều nhau bằng hai lực cân bằng có độ lớn mỗi bên là <span class=\"math\">50 N</span> (tổng độ lớn hai lực kéo ở hai đầu là <span class=\"math\">100 N</span>). Khi lực kế đứng yên cân bằng, số chỉ của lực kế lò xo là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">HAI LỰC KÉO NGƯỢC CHIỀU Ở HAI ĐẦU LỰC KẾ LÒ XO</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (F<tspan baseline-shift=\"sub\" font-size=\"78%\">tr</tspan>ái = 50 N):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (F<tspan baseline-shift=\"sub\" font-size=\"78%\">ph</tspan>ải = 50 N):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 50 N</text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Cân bằng</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Hai đầu chịu hai lực kéo ngược chiều 50 N</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Một đầu đóng vai trò giữ cố định, đầu kia kéo 50 N</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Lực đàn hồi trong lò xo: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = k · Δℓ = 50 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Số chỉ của lực kế bằng độ lớn lực kéo ở một đầu: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 50 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">50 N</span>",
+                        "<span class=\"math\">100 N</span>",
+                        "<span class=\"math\">0 N</span>",
+                        "<span class=\"math\">25 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Hai lực <span class=\"math\">50 N</span> kéo ngược chiều ở hai đầu giữ cho lực kế đứng yên và làm lò xo dãn ra một đoạn <span class=\"math\">Δℓ</span> thỏa mãn <span class=\"math\">F<sub>đh</sub> = k · Δℓ = 50 N</span>. Số chỉ của lực kế chính là độ lớn lực đàn hồi <span class=\"math\">F<sub>đh</sub> = 50 N</span>."
+            },
+            {
+                  "id": "L2_04",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Một lò xo nhẹ được treo thẳng đứng. Khi treo vật có khối lượng <span class=\"math\">m = 100 g</span> vào đầu dưới thì lò xo dãn ra <span class=\"math\">Δℓ<sub>1</sub> = 2 cm</span>. Khi treo thêm vào lò xo một vật có khối lượng <span class=\"math\">m′</span> thì tổng độ dãn của lò xo khi cân bằng là <span class=\"math\">Δℓ<sub>2</sub> = 8 cm</span>. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Độ cứng <span class=\"math\">k</span> của lò xo và khối lượng <span class=\"math\">m′</span> treo thêm lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">TREO THÊM VẬT NẶNG m′ VÀO LÒ XO THẲNG ĐỨNG</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Δℓ₁ = 2 cm</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">m + m′</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ₂ = 8 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Lúc đầu (m = 100 g): k = 0,1×10 / 0,02 = 50 N/m</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Lúc sau (Δℓ₂ = 8 cm): Tổng M = 50×0,08 / 10 = 400 g</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Vật treo thêm: m′ = M - m = 400 - 100 = 300 g</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">k = 50 N/m  ;  Tổng khối lượng M = 400 g  ⟹  m′ = 400 - 100 = 300 g</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">k = 50 N/m</span> và <span class=\"math\">m′ = 300 g</span>",
+                        "<span class=\"math\">k = 50 N/m</span> và <span class=\"math\">m′ = 400 g</span>",
+                        "<span class=\"math\">k = 5 N/m</span> và <span class=\"math\">m′ = 300 g</span>",
+                        "<span class=\"math\">k = 100 N/m</span> và <span class=\"math\">m′ = 200 g</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Độ cứng của lò xo: <span class=\"math\">k = <span class=\"frac\"><span class=\"num\">m · g</span><span class=\"den\">Δℓ<sub>1</sub></span></span> = <span class=\"frac\"><span class=\"num\">0,1 · 10</span><span class=\"den\">0,02</span></span> = 50 N/m</span>. Khi tổng độ dãn là <span class=\"math\">Δℓ<sub>2</sub> = 8 cm = 0,08 m</span>, tổng khối lượng treo vào lò xo là <span class=\"math\">M = <span class=\"frac\"><span class=\"num\">k · Δℓ<sub>2</sub></span><span class=\"den\">g</span></span> = <span class=\"frac\"><span class=\"num\">50 · 0,08</span><span class=\"den\">10</span></span> = 0,4 kg = 400 g</span>. Vậy khối lượng treo thêm là <span class=\"math\">m′ = M - m = 400 - 100 = 300 g</span>."
+            },
+            {
+                  "id": "L2_05",
+                  "tag": "Cấp độ 2 • Vận dụng (7–8 điểm)",
+                  "question": "Khảo sát sự phụ thuộc của độ lớn lực đàn hồi <span class=\"math\">F<sub>đh</sub></span> theo chiều dài <span class=\"math\">ℓ</span> của một lò xo khi bị kéo dãn: khi <span class=\"math\">ℓ = 40 cm</span> thì <span class=\"math\">F<sub>đh</sub> = 0 N</span>; khi <span class=\"math\">ℓ = 60 cm</span> thì <span class=\"math\">F<sub>đh</sub> = 4 N</span>. Độ cứng <span class=\"math\">k</span> của lò xo và độ lớn lực đàn hồi khi lò xo có chiều dài <span class=\"math\">ℓ′ = 55 cm</span> lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">ĐỒ THỊ LỰC ĐÀN HỒI F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> THEO CHIỀU DÀI LÒ XO ℓ</text>\n      \n      <line x1=\"65\" y1=\"155\" x2=\"225\" y2=\"155\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <line x1=\"65\" y1=\"155\" x2=\"65\" y2=\"38\" stroke=\"#0f172a\" stroke-width=\"2\" marker-end=\"url(#arrB)\"/>\n      <text x=\"218\" y=\"172\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">ℓ (cm)</text>\n      <text x=\"48\" y=\"46\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1e3a8a\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> (N)</text>\n      <text x=\"53\" y=\"168\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#0f172a\">O</text>\n      <line x1=\"65\" y1=\"155\" x2=\"165\" y2=\"68\" stroke=\"#2563eb\" stroke-width=\"3\"/>\n      <circle cx=\"165\" cy=\"68\" r=\"4.5\" fill=\"#dc2626\"/>\n      <line x1=\"165\" y1=\"68\" x2=\"165\" y2=\"155\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"65\" y1=\"68\" x2=\"165\" y2=\"68\" stroke=\"#64748b\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <text x=\"165\" y=\"170\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">60</text>\n      <text x=\"56\" y=\"72\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#dc2626\">4</text>\n      <rect x=\"240\" y=\"48\" width=\"230\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"355\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Tại F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 0 N  ⟹  Chiều dài tự nhiên ℓ₀ = 40 cm</text>\n      <text x=\"355\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Tại ℓ = 60 cm: Δℓ = 0,2 m  ⟹  k = 4 / 0,2 = 20 N/m</text>\n      <text x=\"355\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Tại ℓ′ = 55 cm: Δℓ′ = 0,15 m  ⟹  F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = 20 × 0,15 = 3 N</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">ℓ₀ = 40 cm  ;  k = 4 / (0,6 - 0,4) = 20 N/m  ;  F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan>(55 cm) = 3 N</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">k = 20 N/m</span> và <span class=\"math\">F<sub>đh</sub> = 3 N</span>",
+                        "<span class=\"math\">k = 40 N/m</span> và <span class=\"math\">F<sub>đh</sub> = 6 N</span>",
+                        "<span class=\"math\">k = 20 N/m</span> và <span class=\"math\">F<sub>đh</sub> = 2,5 N</span>",
+                        "<span class=\"math\">k = 10 N/m</span> và <span class=\"math\">F<sub>đh</sub> = 1,5 N</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Khi <span class=\"math\">F<sub>đh</sub> = 0 N</span>, lò xo có chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub> = 40 cm</span>. Khi <span class=\"math\">ℓ = 60 cm</span>, độ dãn là <span class=\"math\">Δℓ = 60 - 40 = 20 cm = 0,2 m ⇒ k = <span class=\"frac\"><span class=\"num\">F<sub>đh</sub></span><span class=\"den\">Δℓ</span></span> = <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">0,2</span></span> = 20 N/m</span>. Khi <span class=\"math\">ℓ′ = 55 cm</span>, độ dãn là <span class=\"math\">Δℓ′ = 55 - 40 = 15 cm = 0,15 m ⇒ F<sub>đh</sub> = 20 · 0,15 = 3 N</span>."
+            }
+      ],
+      "3": [
+            {
+                  "id": "L3_01",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Một lò xo nhẹ có chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub></span> và độ cứng <span class=\"math\">k</span>, đầu trên treo cố định. Khi treo vật nặng <span class=\"math\">m<sub>1</sub> = 100 g</span> thì ở vị trí cân bằng lò xo dài <span class=\"math\">ℓ<sub>1</sub> = 22 cm</span>. Khi thay bằng vật nặng <span class=\"math\">m<sub>2</sub> = 400 g</span> thì ở vị trí cân bằng lò xo dài <span class=\"math\">ℓ<sub>2</sub> = 28 cm</span>. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Giá trị của <span class=\"math\">ℓ<sub>0</sub></span> và <span class=\"math\">k</span> lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">HỆ PHƯƠNG TRÌNH LÒ XO TREO HAI VẬT m₁ = 100 g VÀ m₂ = 400 g</text>\n      \n      <line x1=\"55\" y1=\"36\" x2=\"205\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n      <!-- Natural spring -->\n      <polyline points=\"85,36 77,48 93,60 77,72 93,84 77,96 85,108\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2\"/>\n      <text x=\"68\" y=\"76\" text-anchor=\"end\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">ℓ₁ = 22 cm</text>\n      <line x1=\"75\" y1=\"108\" x2=\"195\" y2=\"108\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring with mass -->\n      <polyline points=\"155,36 146,52 164,68 146,84 164,100 146,116 164,132 155,144\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.4\"/>\n      <rect x=\"141\" y=\"144\" width=\"28\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <text x=\"155\" y=\"160\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"bold\" fill=\"#0f172a\">m₁, m₂</text>\n      <line x1=\"155\" y1=\"144\" x2=\"155\" y2=\"108\" stroke=\"#1d4ed8\" stroke-width=\"2.5\" marker-end=\"url(#arrB)\"/>\n      <text x=\"174\" y=\"122\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#1d4ed8\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan></text>\n      <line x1=\"190\" y1=\"108\" x2=\"190\" y2=\"144\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"210\" y=\"130\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">ℓ₂ = 28 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">m₁g = k(ℓ₁ - ℓ₀) = 1 N  ;  m₂g = k(ℓ₂ - ℓ₀) = 4 N</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">k = (m₂ - m₁)g / (ℓ₂ - ℓ₁) = 3 / 0,06 = 50 N/m</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">ℓ₀ = ℓ₁ - m₁g / k = 22 - 2 = 20 cm</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">k = (4 - 1) / (0,28 - 0,22) = 50 N/m   và   ℓ₀ = 20 cm</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">ℓ<sub>0</sub> = 20 cm</span> và <span class=\"math\">k = 50 N/m</span>",
+                        "<span class=\"math\">ℓ<sub>0</sub> = 18 cm</span> và <span class=\"math\">k = 25 N/m</span>",
+                        "<span class=\"math\">ℓ<sub>0</sub> = 20 cm</span> và <span class=\"math\">k = 100 N/m</span>",
+                        "<span class=\"math\">ℓ<sub>0</sub> = 16 cm</span> và <span class=\"math\">k = 50 N/m</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Ta có hệ phương trình cân bằng: <span class=\"math\">m<sub>1</sub>g = k(ℓ<sub>1</sub> - ℓ<sub>0</sub>)</span> và <span class=\"math\">m<sub>2</sub>g = k(ℓ<sub>2</sub> - ℓ<sub>0</sub>)</span>. Trừ vế theo vế: <span class=\"math\">(m<sub>2</sub> - m<sub>1</sub>)g = k(ℓ<sub>2</sub> - ℓ<sub>1</sub>) ⇒ k = <span class=\"frac\"><span class=\"num\">(0,4 - 0,1) · 10</span><span class=\"den\">0,28 - 0,22</span></span> = <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">0,06</span></span> = 50 N/m</span>. Thay lại: <span class=\"math\">0,1 · 10 = 50 · (0,22 - ℓ<sub>0</sub>) ⇒ ℓ<sub>0</sub> = 0,20 m = 20 cm</span>."
+            },
+            {
+                  "id": "L3_02",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Một lò xo đồng chất tiết diện đều có chiều dài tự nhiên <span class=\"math\">ℓ<sub>0</sub> = 24 cm</span> và độ cứng <span class=\"math\">k<sub>0</sub> = 100 N/m</span>. Người ta cắt lò xo này thành hai lò xo có chiều dài tự nhiên lần lượt là <span class=\"math\">ℓ<sub>1</sub> = 8 cm</span> và <span class=\"math\">ℓ<sub>2</sub> = 16 cm</span>. Độ cứng <span class=\"math\">k<sub>1</sub></span>, <span class=\"math\">k<sub>2</sub></span> của hai lò xo sau khi cắt lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">BÀI TOÁN CẮT LÒ XO ĐỒNG CHẤT (k₀ · ℓ₀ = k₁ · ℓ₁ = k₂ · ℓ₂)</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (ℓ₀ = 24 cm):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (ℓ₁ = 8 cm):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">k₁, k₂</text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">ℓ₂ = 16 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Quy tắc cắt lò xo: k₀ · ℓ₀ = k₁ · ℓ₁ = k₂ · ℓ₂</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">k₁ = k₀ · (ℓ₀ / ℓ₁) = 100 × (24 / 8) = 300 N/m</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">k₂ = k₀ · (ℓ₀ / ℓ₂) = 100 × (24 / 16) = 150 N/m</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">k₀ · ℓ₀ = k₁ · ℓ₁ = k₂ · ℓ₂  ⟹  k₁ = 300 N/m  ;  k₂ = 150 N/m</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">k<sub>1</sub> = 300 N/m</span> và <span class=\"math\">k<sub>2</sub> = 150 N/m</span>",
+                        "<span class=\"math\">k<sub>1</sub> = 150 N/m</span> và <span class=\"math\">k<sub>2</sub> = 300 N/m</span>",
+                        "<span class=\"math\">k<sub>1</sub> = 200 N/m</span> và <span class=\"math\">k<sub>2</sub> = 100 N/m</span>",
+                        "<span class=\"math\">k<sub>1</sub> = 300 N/m</span> và <span class=\"math\">k<sub>2</sub> = 200 N/m</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Với một lò xo đồng chất tiết diện đều, tích độ cứng và chiều dài tự nhiên là không đổi: <span class=\"math\">k<sub>0</sub> · ℓ<sub>0</sub> = k<sub>1</sub> · ℓ<sub>1</sub> = k<sub>2</sub> · ℓ<sub>2</sub> = 100 · 24 = 2400 (N · cm)</span>. Do đó: <span class=\"math\">k<sub>1</sub> = <span class=\"frac\"><span class=\"num\">2400</span><span class=\"den\">8</span></span> = 300 N/m</span> và <span class=\"math\">k<sub>2</sub> = <span class=\"frac\"><span class=\"num\">2400</span><span class=\"den\">16</span></span> = 150 N/m</span>."
+            },
+            {
+                  "id": "L3_03",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Cho hai lò xo nhẹ có độ cứng lần lượt là <span class=\"math\">k<sub>1</sub> = 300 N/m</span> và <span class=\"math\">k<sub>2</sub> = 150 N/m</span>. Độ cứng tương đương của hệ hai lò xo khi ghép song song (<span class=\"math\">k<sub>ss</sub></span>) và khi ghép nối tiếp (<span class=\"math\">k<sub>nt</sub></span>) lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">GHÉP NỐI TIẾP VÀ GHÉP SONG SONG HAI LÒ XO k₁, k₂</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (k₁ = 300 N/m):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (k₂ = 150 N/m):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">k<tspan baseline-shift=\"sub\" font-size=\"78%\">tđ</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Ghép hệ</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Ghép song song: k<tspan baseline-shift=\"sub\" font-size=\"78%\">ss</tspan> = k₁ + k₂ = 300 + 150 = 450 N/m</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Ghép nối tiếp: 1 / k<tspan baseline-shift=\"sub\" font-size=\"78%\">nt</tspan> = 1 / k₁ + 1 / k₂</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">k<tspan baseline-shift=\"sub\" font-size=\"78%\">nt</tspan> = (k₁ · k₂) / (k₁ + k₂) = 45000 / 450 = 100 N/m</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Ghép song song: k<tspan baseline-shift=\"sub\" font-size=\"78%\">ss</tspan> = 450 N/m   ;   Ghép nối tiếp: k<tspan baseline-shift=\"sub\" font-size=\"78%\">nt</tspan> = 100 N/m</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">k<sub>ss</sub> = 450 N/m</span> và <span class=\"math\">k<sub>nt</sub> = 100 N/m</span>",
+                        "<span class=\"math\">k<sub>ss</sub> = 100 N/m</span> và <span class=\"math\">k<sub>nt</sub> = 450 N/m</span>",
+                        "<span class=\"math\">k<sub>ss</sub> = 450 N/m</span> và <span class=\"math\">k<sub>nt</sub> = 225 N/m</span>",
+                        "<span class=\"math\">k<sub>ss</sub> = 150 N/m</span> và <span class=\"math\">k<sub>nt</sub> = 100 N/m</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Khi ghép song song hai lò xo: <span class=\"math\">k<sub>ss</sub> = k<sub>1</sub> + k<sub>2</sub> = 300 + 150 = 450 N/m</span>. Khi ghép nối tiếp hai lò xo: <span class=\"math\">k<sub>nt</sub> = <span class=\"frac\"><span class=\"num\">k<sub>1</sub> · k<sub>2</sub></span><span class=\"den\">k<sub>1</sub> + k<sub>2</sub></span></span> = <span class=\"frac\"><span class=\"num\">300 · 150</span><span class=\"den\">300 + 150</span></span> = 100 N/m</span>."
+            },
+            {
+                  "id": "L3_04",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Dùng một lò xo nhẹ có trục luôn song song với mặt bàn nằm ngang, độ cứng <span class=\"math\">k = 50 N/m</span>, để kéo một vật nặng khối lượng <span class=\"math\">m = 200 g</span> trượt thẳng đều trên mặt bàn nằm ngang. Hệ số ma sát trượt giữa vật và mặt bàn là <span class=\"math\">μ = 0,2</span>. Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Độ dãn <span class=\"math\">Δℓ</span> của lò xo khi đó là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">DÙNG LÒ XO KÉO VẬT TRƯỢT THẲNG ĐỀU TRÊN MẶT PHẲNG NGANG</text>\n      \n      <line x1=\"45\" y1=\"40\" x2=\"45\" y2=\"165\" stroke=\"#334155\" stroke-width=\"4\"/>\n      <!-- Natural spring -->\n      <text x=\"52\" y=\"55\" font-size=\"11\" font-weight=\"bold\" fill=\"#475569\">Tự nhiên (m = 0,2 kg):</text>\n      <polyline points=\"45,72 60,62 72,82 84,62 96,82 108,62 120,82 132,62 145,72\" fill=\"none\" stroke=\"#64748b\" stroke-width=\"2.2\"/>\n      <circle cx=\"145\" cy=\"72\" r=\"4\" fill=\"#475569\"/>\n      <line x1=\"145\" y1=\"50\" x2=\"145\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <!-- Stretched spring -->\n      <text x=\"52\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#1e3a8a\">Biến dạng (μ = 0,2):</text>\n      <polyline points=\"45,126 65,115 82,137 99,115 116,137 133,115 150,137 167,115 185,126\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\"/>\n      <rect x=\"185\" y=\"114\" width=\"24\" height=\"24\" rx=\"4\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"1.8\"/>\n      <line x1=\"185\" y1=\"126\" x2=\"148\" y2=\"126\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n      <text x=\"165\" y=\"112\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = F<tspan baseline-shift=\"sub\" font-size=\"78%\">mst</tspan></text>\n      <line x1=\"185\" y1=\"105\" x2=\"185\" y2=\"165\" stroke=\"#dc2626\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n      <line x1=\"145\" y1=\"156\" x2=\"185\" y2=\"156\" stroke=\"#16a34a\" stroke-width=\"2\"/>\n      <text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#16a34a\">Δℓ = 0,8 cm</text>\n      <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n      <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Lực ma sát trượt: F<tspan baseline-shift=\"sub\" font-size=\"78%\">mst</tspan> = μ · m · g = 0,2 × 0,2 × 10 = 0,4 N</text>\n      <text x=\"352\" y=\"108\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">Chuyển động thẳng đều: F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> = F<tspan baseline-shift=\"sub\" font-size=\"78%\">mst</tspan> = 0,4 N</text>\n      <text x=\"352\" y=\"140\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#16a34a\">Độ dãn: Δℓ = F<tspan baseline-shift=\"sub\" font-size=\"78%\">đh</tspan> / k = 0,4 / 50 = 0,008 m = 0,8 cm</text>\n    \n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">k · Δℓ = μ · m · g  ⟹  Δℓ = 0,4 / 50 = 0,008 m = 0,8 cm</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">0,8 cm</span>",
+                        "<span class=\"math\">4,0 cm</span>",
+                        "<span class=\"math\">0,4 cm</span>",
+                        "<span class=\"math\">1,6 cm</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Đổi <span class=\"math\">m = 200 g = 0,2 kg</span>. Khi vật trượt thẳng đều trên mặt ngang, lực đàn hồi của lò xo cân bằng với lực ma sát trượt: <span class=\"math\">F<sub>đh</sub> = F<sub>mst</sub> ⇔ k · Δℓ = μ · m · g ⇒ Δℓ = <span class=\"frac\"><span class=\"num\">μ · m · g</span><span class=\"den\">k</span></span> = <span class=\"frac\"><span class=\"num\">0,2 · 0,2 · 10</span><span class=\"den\">50</span></span> = 0,008 m = 0,8 cm</span>."
+            },
+            {
+                  "id": "L3_05",
+                  "tag": "Cấp độ 3 • Vận dụng cao (9–10 điểm)",
+                  "question": "Cơ hệ gồm hai lò xo nhẹ có cùng độ cứng <span class=\"math\">k = 80 N/m</span>. Đầu trên của hai lò xo gắn cố định, hai đầu dưới nối chung vào vật nặng khối lượng <span class=\"math\">m = 1 kg</span>. Khi vật ở trạng thái cân bằng, trục của lò xo thứ nhất hợp với phương thẳng đứng góc <span class=\"math\">30°</span>, trục của lò xo thứ hai hợp với phương thẳng đứng góc <span class=\"math\">60°</span> (hai lò xo vuông góc nhau). Lấy <span class=\"math\">g = 10 m/s<sup>2</sup></span>. Độ dãn của lò xo thứ nhất (<span class=\"math\">Δℓ<sub>1</sub></span>) và lò xo thứ hai (<span class=\"math\">Δℓ<sub>2</sub></span>) lần lượt là",
+                  "svg": "<svg viewBox=\"0 0 500 220\" xmlns=\"http://www.w3.org/2000/svg\">\n      <defs>\n        <marker id=\"arrB\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#1d4ed8\"/></marker>\n        <marker id=\"arrR\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#dc2626\"/></marker>\n        <marker id=\"arrG\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#16a34a\"/></marker>\n        <marker id=\"arrP\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 Z\" fill=\"#7c3aed\"/></marker>\n      </defs>\n      <rect width=\"500\" height=\"220\" rx=\"12\" fill=\"#f8fafc\" stroke=\"#e2e8f0\"/>\n      <text x=\"250\" y=\"22\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"bold\" fill=\"#0f172a\">CÂN BẰNG CỦA VẬT NẶNG TREO BỞI HAI LÒ XO VUÔNG GÓC NHAU</text>\n      <line x1=\"65\" y1=\"36\" x2=\"215\" y2=\"36\" stroke=\"#334155\" stroke-width=\"3.5\"/>\n         <line x1=\"140\" y1=\"36\" x2=\"140\" y2=\"165\" stroke=\"#94a3b8\" stroke-width=\"1.5\" stroke-dasharray=\"4,3\"/>\n         <line x1=\"140\" y1=\"115\" x2=\"100\" y2=\"46\" stroke=\"#2563eb\" stroke-width=\"3\"/>\n         <line x1=\"140\" y1=\"115\" x2=\"198\" y2=\"81\" stroke=\"#7c3aed\" stroke-width=\"3\"/>\n         <circle cx=\"140\" cy=\"115\" r=\"8\" fill=\"#f59e0b\" stroke=\"#b45309\" stroke-width=\"2\"/>\n         <line x1=\"140\" y1=\"115\" x2=\"140\" y2=\"162\" stroke=\"#dc2626\" stroke-width=\"2.5\" marker-end=\"url(#arrR)\"/>\n         <text x=\"150\" y=\"158\" font-size=\"11.5\" font-weight=\"bold\" fill=\"#dc2626\">P = 10 N</text>\n         <text x=\"115\" y=\"74\" font-size=\"11\" font-weight=\"bold\" fill=\"#2563eb\">30° (F₁)</text>\n         <text x=\"172\" y=\"108\" font-size=\"11\" font-weight=\"bold\" fill=\"#7c3aed\">60° (F₂)</text>\n         <rect x=\"235\" y=\"48\" width=\"235\" height=\"114\" rx=\"8\" fill=\"#ffffff\" stroke=\"#cbd5e1\"/>\n         <text x=\"352\" y=\"76\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#1e3a8a\">Hai lò xo vuông góc: α₁ = 30°, α₂ = 60°</text>\n         <text x=\"352\" y=\"106\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#dc2626\">F₁ = P·cos30° = 5√3 N ⟹ Δℓ₁ ≈ 10,8 cm</text>\n         <text x=\"352\" y=\"138\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"bold\" fill=\"#16a34a\">F₂ = P·sin30° = 5 N ⟹ Δℓ₂ = 6,25 cm</text>\n      <rect x=\"30\" y=\"182\" width=\"440\" height=\"28\" rx=\"6\" fill=\"#eff6ff\" stroke=\"#bfdbfe\"/>\n      <text x=\"250\" y=\"201\" text-anchor=\"middle\" font-size=\"12.5\" font-weight=\"bold\" fill=\"#1e3a8a\">Δℓ₁ = (P · cos30°) / k ≈ 10,8 cm   ;   Δℓ₂ = (P · sin30°) / k = 6,25 cm</text>\n    </svg>",
+                  "options": [
+                        "<span class=\"math\">Δℓ<sub>1</sub> ≈ 10,8 cm</span> và <span class=\"math\">Δℓ<sub>2</sub> = 6,25 cm</span>",
+                        "<span class=\"math\">Δℓ<sub>1</sub> = 6,25 cm</span> và <span class=\"math\">Δℓ<sub>2</sub> ≈ 10,8 cm</span>",
+                        "<span class=\"math\">Δℓ<sub>1</sub> = 12,5 cm</span> và <span class=\"math\">Δℓ<sub>2</sub> = 6,25 cm</span>",
+                        "<span class=\"math\">Δℓ<sub>1</sub> ≈ 8,66 cm</span> và <span class=\"math\">Δℓ<sub>2</sub> = 5,00 cm</span>"
+                  ],
+                  "correctIndex": 0,
+                  "explanation": "Trọng lượng của vật <span class=\"math\">P = m · g = 10 N</span>. Do hai lò xo hợp với phương thẳng đứng góc <span class=\"math\">30°</span> và <span class=\"math\">60°</span> (vuông góc nhau), phân tích lực cân bằng ta có: <span class=\"math\">F<sub>1</sub> = P · cos 30° = 5<span class=\"sqrt\"><span>3</span></span> N ⇒ Δℓ<sub>1</sub> = <span class=\"frac\"><span class=\"num\">5<span class=\"sqrt\"><span>3</span></span></span><span class=\"den\">80</span></span> ≈ 0,1083 m ≈ 10,8 cm</span>; và <span class=\"math\">F<sub>2</sub> = P · sin 30° = 5 N ⇒ Δℓ<sub>2</sub> = <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">80</span></span> = 0,0625 m = 6,25 cm</span>."
+            }
+      ]
+};
+
+    // =========================================================================
+    // 3. QUẢN LÝ TRẠNG THÁI, ĐẢO CÂU HỎI / ĐÁP ÁN & KHÓA CHẶT CẤP ĐỘ 2, 3
+    // =========================================================================
+    const state = {
+      currentLevel: 1,
+      level1PerfectCount: 0, // Bắt buộc đạt đủ 3 lần đúng 12/12 mới mở khóa Cấp độ 2 & 3
+      teacherUnlocked: false,
+      level1AttemptNumber: 1,
+      activeQuestions: [],
+      answers: {},
+      bestScores: { 1: 0, 2: 0, 3: 0 },
+      history: []
+    };
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Chỉ mở khóa Cấp độ 2 và 3 sau khi hoàn thành đúng 12/12 câu Cấp độ 1 đủ 3 lần
+    function isUnlocked(level) {
+      if (level === 1) return true;
+      return state.level1PerfectCount >= 3 || state.teacherUnlocked;
+    }
+
+    window.handleTeacherUnlock = function () {
+      if (state.teacherUnlocked) {
+        showSoundToast("🔓 Chế độ Giáo viên đã được mở khóa!", true);
+        return;
+      }
+      const inputEl = document.getElementById("teacherCodeInput");
+      const code = (inputEl ? inputEl.value : "").trim();
+      if (code === "1819") {
+        state.teacherUnlocked = true;
+        playUnlockFanfare();
+        showSoundToast("🔓 Mở khóa Chế độ Giáo viên thành công! Đã mở Cấp độ 2 & 3.", true);
+        if (inputEl) {
+          inputEl.value = "";
+          inputEl.placeholder = "Đã mở GV";
+          inputEl.disabled = true;
+        }
+        const btn = document.getElementById("btnTeacherUnlock");
+        if (btn) {
+          btn.textContent = "✅ Đã mở khóa GV";
+          btn.classList.add("unlocked");
+        }
+        renderUnlockProgress();
+      } else {
+        playFunnySound(false);
+        showSoundToast("❌ Mã mở khóa Giáo viên chưa đúng! Vui lòng nhập mã để mở khóa.", false);
+        if (inputEl) inputEl.focus();
+      }
+    };
+
+    function prepareLevelQuestions(level) {
+      const rawList = QUESTIONS_DB[level];
+      const shuffledQuestions = shuffleArray(rawList).map((q) => {
+        const optionObjs = q.options.map((text, idx) => ({
+          text,
+          isCorrect: idx === q.correctIndex
+        }));
+        const shuffledOptions = shuffleArray(optionObjs);
+        return {
+          ...q,
+          shuffledOptions
+        };
+      });
+      state.activeQuestions = shuffledQuestions;
+      state.answers = {};
+    }
+
+    function renderUnlockProgress() {
+      for (let i = 1; i <= 3; i++) {
+        const pill = document.getElementById("star" + i);
+        if (state.level1PerfectCount >= i) {
+          pill.className = "star-pill done";
+          pill.textContent = `🌟 Lần ${i}: Đạt 12/12`;
+        } else {
+          pill.className = "star-pill";
+          pill.textContent = `⭐ Lần ${i}: Chưa đạt`;
+        }
+      }
+
+      const titleEl = document.getElementById("unlockTitle");
+      const subEl = document.getElementById("unlockSubtitle");
+      const tab2 = document.getElementById("tabLevel2");
+      const tab3 = document.getElementById("tabLevel3");
+      const badge2 = document.getElementById("badgeLevel2");
+      const badge3 = document.getElementById("badgeLevel3");
+
+      if (state.level1PerfectCount >= 3 || state.teacherUnlocked) {
+        titleEl.innerHTML = state.teacherUnlocked && state.level1PerfectCount < 3 ? "🔓 CHẾ ĐỘ GIÁO VIÊN: Đã mở khóa Cấp độ 2 (7–8 điểm) và Cấp độ 3 (9–10 điểm)!" : "🔓 CHÚC MỪNG! Em đã hoàn thành đủ 3 lần đúng 12/12 câu Cấp độ 1 và MỞ KHÓA Cấp độ 2 &amp; 3!";
+        subEl.textContent = "Bây giờ em có thể bấm chọn Cấp độ 2 (7–8 điểm) và Cấp độ 3 (9–10 điểm) để tiếp tục luyện tập.";
+        tab2.classList.remove("locked");
+        tab3.classList.remove("locked");
+        badge2.textContent = "🔓 Đã mở • 5 câu";
+        badge3.textContent = "🔓 Đã mở • 5 câu";
+      } else {
+        const remain = 3 - state.level1PerfectCount;
+        titleEl.innerHTML = `🔒 Yêu cầu bắt buộc: Cần thêm ${remain} lần đạt 12/12 câu đúng ở Cấp độ 1 để mở khóa Cấp độ 2 &amp; 3!`;
+        subEl.textContent = "Học sinh bắt buộc phải làm hết 12 câu Cấp độ 1 và làm lại đủ 3 lần đúng hết 12/12 câu mới được mở khóa chuyển lên các cấp độ tiếp theo.";
+        tab2.classList.add("locked");
+        tab3.classList.add("locked");
+        badge2.textContent = "🔒 Khóa • 5 câu";
+        badge3.textContent = "🔒 Khóa • 5 câu";
+      }
+
+      [1, 2, 3].forEach((lv) => {
+        const tab = document.getElementById("tabLevel" + lv);
+        if (lv === state.currentLevel) {
+          tab.classList.add("active");
+        } else {
+          tab.classList.remove("active");
+        }
+      });
+    }
+
+    function updateToolbarStats() {
+      const total = state.activeQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      const correctCount = Object.values(state.answers).filter((a) => a.isCorrect).length;
+
+      const levelNames = {
+        1: "Cấp độ 1 (Nền tảng)",
+        2: "Cấp độ 2 (7–8 điểm)",
+        3: "Cấp độ 3 (9–10 điểm)"
+      };
+      document.getElementById("statCurrentLevel").textContent = levelNames[state.currentLevel];
+      document.getElementById("statProgress").textContent = `${answeredCount} / ${total}`;
+      document.getElementById("statCorrect").textContent = `${correctCount} / ${total}`;
+      document.getElementById("statAttempt").textContent = state.level1AttemptNumber;
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = "";
+      document.getElementById("roundSummary").classList.remove("show");
+
+      const letters = ["A", "B", "C", "D"];
+
+      state.activeQuestions.forEach((q, qIdx) => {
+        const card = document.createElement("article");
+        card.className = "question-card";
+        card.id = `qcard_${qIdx}`;
+
+        const optionsHtml = q.shuffledOptions
+          .map((opt, optIdx) => {
+            return `
+              <button type="button" class="option-btn" id="opt_${qIdx}_${optIdx}" onclick="handleSelectOption(${qIdx}, ${optIdx})">
+                <span class="option-letter">${letters[optIdx]}</span>
+                <span class="option-content">${opt.text}</span>
+              </button>
+            `;
+          })
+          .join("");
+
+        card.innerHTML = `
+          <div class="q-header">
+            <span class="q-num">Câu ${qIdx + 1} / ${state.activeQuestions.length}</span>
+            <span class="q-tag">${q.tag}</span>
+          </div>
+          <div class="q-text">${q.question}</div>
+          <div class="q-illustration">${q.svg}</div>
+          <div class="options-grid" id="optgrid_${qIdx}">
+            ${optionsHtml}
+          </div>
+          <div class="feedback-box" id="feedback_${qIdx}"></div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      updateToolbarStats();
+    }
+
+    window.handleSelectOption = function (qIdx, optIdx) {
+      if (state.answers[qIdx] !== undefined) return;
+
+      const q = state.activeQuestions[qIdx];
+      const chosen = q.shuffledOptions[optIdx];
+      const isCorrect = chosen.isCorrect;
+
+      state.answers[qIdx] = {
+        selectedOptionIndex: optIdx,
+        isCorrect
+      };
+
+      playFunnySound(isCorrect);
+
+      const card = document.getElementById(`qcard_${qIdx}`);
+      card.classList.add(isCorrect ? "answered-correct" : "answered-wrong");
+
+      q.shuffledOptions.forEach((opt, i) => {
+        const btn = document.getElementById(`opt_${qIdx}_${i}`);
+        btn.disabled = true;
+        if (opt.isCorrect) {
+          btn.classList.add("correct");
+        } else if (i === optIdx && !isCorrect) {
+          btn.classList.add("wrong");
+        }
+      });
+
+      const fb = document.getElementById(`feedback_${qIdx}`);
+      const letters = ["A", "B", "C", "D"];
+      const rightIdx = q.shuffledOptions.findIndex((o) => o.isCorrect);
+      fb.className = "feedback-box show " + (isCorrect ? "correct" : "wrong");
+      fb.innerHTML = `
+        <div class="feedback-title">
+          ${isCorrect ? "✅ CHÍNH XÁC! Làm tốt lắm!" : `❌ CHƯA ĐÚNG! Đáp án đúng là phương án ${letters[rightIdx]}.`}
+        </div>
+        <div>💡 <b>Giải thích chi tiết:</b> ${q.explanation}</div>
+      `;
+
+      updateToolbarStats();
+      checkRoundCompletion();
+    };
+
+    function checkRoundCompletion() {
+      const total = state.activeQuestions.length;
+      const answeredCount = Object.keys(state.answers).length;
+      if (answeredCount < total) return;
+
+      const correctCount = Object.values(state.answers).filter((a) => a.isCorrect).length;
+      if (correctCount > state.bestScores[state.currentLevel]) {
+        state.bestScores[state.currentLevel] = correctCount;
+      }
+
+      const nowStr = new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      state.history.unshift({
+        time: nowStr,
+        level: state.currentLevel,
+        score: `${correctCount}/${total}`
+      });
+
+      const summaryBox = document.getElementById("roundSummary");
+      const summaryTitle = document.getElementById("summaryTitle");
+      const summaryText = document.getElementById("summaryText");
+      const btnNext = document.getElementById("btnNextLevel");
+      summaryBox.classList.add("show");
+
+      if (state.currentLevel === 1) {
+        if (correctCount === total) {
+          state.level1PerfectCount += 1;
+          renderUnlockProgress();
+          if (state.level1PerfectCount >= 3 || state.teacherUnlocked) {
+            playUnlockFanfare();
+            summaryTitle.innerHTML = `🏆 XUẤT SẮC! Đạt 12/12 câu (${state.level1PerfectCount}/3 lần) – ĐÃ MỞ KHÓA CẤP ĐỘ 2 &amp; 3!`;
+            summaryText.innerHTML = `Chúc mừng em đã vượt qua thử thách <b>3 lần đúng hết 12/12 câu Cấp độ 1</b>. Bây giờ em đã được mở khóa để chuyển lên <b>Cấp độ 2 (7–8 điểm)</b> và <b>Cấp độ 3 (9–10 điểm)</b>!`;
+            btnNext.style.display = "inline-flex";
+          } else {
+            summaryTitle.innerHTML = `🌟 Tuyệt vời! Em đạt 12/12 câu đúng (Đã tích lũy ${state.level1PerfectCount}/3 lần)!`;
+            summaryText.innerHTML = `Em cần làm lại Cấp độ 1 thêm <b>${3 - state.level1PerfectCount} lần đạt 12/12 câu đúng</b> nữa để mở khóa Cấp độ 2 và Cấp độ 3. Hãy bấm <b>"Làm lại cấp độ này (Đảo đề mới)"</b> nhé!`;
+            btnNext.style.display = "none";
+          }
+        } else {
+          summaryTitle.innerHTML = `💪 Kết quả lượt này: Đúng ${correctCount}/${total} câu!`;
+          summaryText.innerHTML = `Chưa đạt 12/12 câu nên lượt này chưa được tính vào 3 lần mở khóa (Hiện tại: <b>${state.level1PerfectCount}/3 lần</b>). Hãy đọc kĩ lời giải các câu sai và bấm <b>"Làm lại cấp độ này (Đảo đề mới)"</b> nhé!`;
+          btnNext.style.display = "none";
+        }
+      } else {
+        summaryTitle.innerHTML = `🎯 Hoàn thành Cấp độ ${state.currentLevel}: Đúng ${correctCount}/${total} câu!`;
+        summaryText.innerHTML = `Em có thể bấm làm lại để luyện tập với đề đảo mới, chuyển cấp độ, hoặc bấm nút <b>"Báo Họ Tên &amp; Kết Quả Thực Hiện"</b> ở phía trên.`;
+        btnNext.style.display = state.currentLevel === 2 ? "inline-flex" : "none";
+      }
+    }
+
+    window.selectLevel = function (level) {
+      if (!isUnlocked(level)) {
+        playFunnySound(false);
+        showSoundToast(`🔒 Cấp độ ${level} đang khóa! Phải đạt 12/12 câu Cấp độ 1 đủ 3 lần (Hiện tại: ${state.level1PerfectCount}/3) mới mở khóa!`, false);
+        return;
+      }
+      state.currentLevel = level;
+      prepareLevelQuestions(level);
+      renderUnlockProgress();
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.restartCurrentLevel = function () {
+      if (state.currentLevel === 1) {
+        state.level1AttemptNumber += 1;
+      }
+      prepareLevelQuestions(state.currentLevel);
+      renderQuestions();
+      window.scrollTo({ top: 180, behavior: "smooth" });
+    };
+
+    window.goNextUnlockedLevel = function () {
+      if (state.currentLevel === 1 && isUnlocked(2)) {
+        selectLevel(2);
+      } else if (state.currentLevel === 2 && isUnlocked(3)) {
+        selectLevel(3);
+      }
+    };
+
+    // =========================================================================
+    // 4. BÁO HỌ TÊN & KẾT QUẢ THỰC HIỆN (MODAL + SAO CHÉP)
+    // =========================================================================
+    function computeTotal10PointScale() {
+      const s1 = (state.bestScores[1] / 12) * 6;
+      const s2 = (state.bestScores[2] / 5) * 2;
+      const s3 = (state.bestScores[3] / 5) * 2;
+      return (s1 + s2 + s3).toFixed(2);
+    }
+
+    document.getElementById("btnShowReport").addEventListener("click", () => {
+      const fullName = document.getElementById("studentName").value.trim() || "(Chưa nhập họ tên)";
+      const className = document.getElementById("studentClass").value.trim() || "(Chưa nhập lớp)";
+
+      const totalScore = computeTotal10PointScale();
+      const unlockedText = state.level1PerfectCount >= 3 ? "✅ Đã mở khóa Cấp độ 2 & 3" : `🔒 Chưa mở khóa (${state.level1PerfectCount}/3 lần 12/12)`;
+
+      const historyHtml =
+        state.history.length === 0
+          ? `<div class="history-item">Chưa có lượt làm bài nào hoàn tất.</div>`
+          : state.history
+              .map(
+                (h, idx) =>
+                  `<div class="history-item">Lượt ${state.history.length - idx} (${h.time}) – <b>Cấp độ ${h.level}</b>: Đúng <b>${h.score}</b> câu</div>`
+              )
+              .join("");
+
+      const reportBody = document.getElementById("reportBody");
+      reportBody.innerHTML = `
+        <p style="margin-bottom:8px;">📌 <b>Chủ đề:</b> Chủ đề 33 – Biến Dạng Của Vật Rắn & Định Luật Hooke (Vật Lí 10)</p>
+        <table class="report-table">
+          <tbody>
+            <tr>
+              <th>Họ và tên học sinh</th>
+              <td><b>${fullName}</b></td>
+            </tr>
+            <tr>
+              <th>Lớp</th>
+              <td><b>${className}</b></td>
+            </tr>
+            <tr>
+              <th>Số lần đạt 12/12 Cấp độ 1</th>
+              <td><b>${state.level1PerfectCount} / 3 lần</b> (${unlockedText})</td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 1 (12 câu)</th>
+              <td><b>${state.bestScores[1]} / 12 câu</b></td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 2 (7–8đ: 5 câu)</th>
+              <td><b>${state.bestScores[2]} / 5 câu</b></td>
+            </tr>
+            <tr>
+              <th>Kết quả cao nhất Cấp độ 3 (9–10đ: 5 câu)</th>
+              <td><b>${state.bestScores[3]} / 5 câu</b></td>
+            </tr>
+            <tr>
+              <th>Tổng điểm quy đổi (Thang điểm 10)</th>
+              <td><b style="color:#dc2626; font-size:1.15rem;">${totalScore} / 10 điểm</b></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-weight:700; font-size:0.88rem; margin-top:10px;">🕒 Lịch sử các lượt hoàn thành trong phiên học:</div>
+        <div class="history-list">${historyHtml}</div>
+      `;
+
+      document.getElementById("reportModal").classList.add("show");
+    });
+
+    window.closeReportModal = function () {
+      document.getElementById("reportModal").classList.remove("show");
+    };
+
+    window.copyReportText = function () {
+      const fullName = document.getElementById("studentName").value.trim() || "(Chưa nhập họ tên)";
+      const className = document.getElementById("studentClass").value.trim() || "(Chưa nhập lớp)";
+      const totalScore = computeTotal10PointScale();
+      const text = [
+        "=== BÁO CÁO KẾT QUẢ LUYỆN TẬP VẬT LÍ 10 ===",
+        "Chủ đề 33: BIẾN DẠNG CỦA VẬT RẮN",
+        `Học sinh: ${fullName} - Lớp: ${className}`,
+        `- Cấp độ 1 (12 câu): Đạt ${state.bestScores[1]}/12 câu (Số lần đạt 12/12: ${state.level1PerfectCount}/3 lần)`,
+        `- Cấp độ 2 (7-8đ): Đạt ${state.bestScores[2]}/5 câu`,
+        `- Cấp độ 3 (9-10đ): Đạt ${state.bestScores[3]}/5 câu`,
+        `=> TỔNG ĐIỂM QUY ĐỔI: ${totalScore} / 10 điểm`
+      ].join("\n");
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showSoundToast("📋 Đã sao chép kết quả! Em có thể dán gửi cho Giáo viên.", true);
+        });
+      } else {
+        alert(text);
+      }
+    };
+
+    // Khởi tạo bài làm lần đầu
+    prepareLevelQuestions(1);
+    renderUnlockProgress();
+    renderQuestions();
+  </script>
+</body>
+</html>
+
